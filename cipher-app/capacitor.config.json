@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "cipher-app",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
