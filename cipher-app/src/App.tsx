@@ -13,7 +13,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { calculatorOutline, key, refreshOutline } from 'ionicons/icons';
+import { keyOutline, refreshOutline } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -39,7 +39,7 @@ const App: React.FC = () => {
   const plaintextInputRef = useRef<HTMLIonInputElement>(null);
   const keyInputRef = useRef<HTMLIonInputElement>(null);
 
-  const calculateCipher = () => {
+  const generateCipher = () => {
     const enteredPlaintext = plaintextInputRef.current!.value;
     const enteredKey = keyInputRef.current!.value;
   };
@@ -52,7 +52,7 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="primary">
           <IonTitle>Cipher Generator</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -61,7 +61,7 @@ const App: React.FC = () => {
           <IonRow>
             <IonCol>
               <IonItem>
-                <IonLabel position = "fixed">Your Plaintext</IonLabel>
+                <IonLabel position = "floating">Your Plaintext</IonLabel>
                 <IonInput ref={plaintextInputRef}></IonInput>
               </IonItem>
             </IonCol>
@@ -69,16 +69,16 @@ const App: React.FC = () => {
           <IonRow>
             <IonCol>
             <IonItem>
-                <IonLabel position = "fixed">Your Key</IonLabel>
+                <IonLabel position = "floating">Your Key</IonLabel>
                 <IonInput ref={keyInputRef}></IonInput>
               </IonItem>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol className="ion-text-left">
-              <IonButton onClick={calculateCipher}>
-                <IonIcon slot="start" icon={calculatorOutline} />
-                Calculate
+              <IonButton onClick={generateCipher}>
+                <IonIcon slot="start" icon={keyOutline} />
+                Generate
               </IonButton>
             </IonCol>
             <IonCol className="ion-text-right">
