@@ -1,19 +1,21 @@
 import {
   IonApp,
-  IonButton,
   IonCol,
   IonContent,
   IonGrid,
   IonHeader,
-  IonIcon,
   IonInput,
   IonItem,
   IonLabel,
   IonRow,
   IonTitle,
   IonToolbar,
+  IonAlert,
 } from "@ionic/react";
-import { keyOutline, refreshOutline } from 'ionicons/icons';
+
+import CipherControls from "./components/CipherControls";
+import CipherResult from "./components/CipherResult";
+import InputControl from "./components/InputControl";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -33,69 +35,80 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 const App: React.FC = () => {
+  const [generatedCipher, setGeneratedCipher] = useState<string | number>();
+  const [error, setError] = useState<string>();
+
   const plaintextInputRef = useRef<HTMLIonInputElement>(null);
   const keyInputRef = useRef<HTMLIonInputElement>(null);
 
   const generateCipher = () => {
     const enteredPlaintext = plaintextInputRef.current!.value;
     const enteredKey = keyInputRef.current!.value;
+
+    if (!enteredPlaintext || !enteredKey || +enteredKey <= 0) {
+      setError("Please enter a valid (non-negative) key");
+      return;
+    }
+
+    const cipher = enteredPlaintext;
+
+    setGeneratedCipher(cipher);
   };
 
   const resetInputs = () => {
-    plaintextInputRef.current!.value = '';
-    keyInputRef.current!.value = '';
+    plaintextInputRef.current!.value = "";
+    keyInputRef.current!.value = "";
+  };
+
+  const clearError = () => {
+    setError('');
   };
 
   return (
-    <IonApp>
-      <IonHeader>
-        <IonToolbar color="primary">
-          <IonTitle>Cipher Generator</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonItem>
-                <IonLabel position = "floating">Your Plaintext</IonLabel>
-                <IonInput ref={plaintextInputRef}></IonInput>
-              </IonItem>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-            <IonItem>
-                <IonLabel position = "floating">Your Key</IonLabel>
-                <IonInput ref={keyInputRef}></IonInput>
-              </IonItem>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol className="ion-text-left">
-              <IonButton onClick={generateCipher}>
-                <IonIcon slot="start" icon={keyOutline} />
-                Generate
-              </IonButton>
-            </IonCol>
-            <IonCol className="ion-text-right">
-              <IonButton onClick={resetInputs}>
-                <IonIcon slot="start" icon={refreshOutline} />
-                Reset
-              </IonButton>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-      </IonContent>
-    </IonApp>
+    <React.Fragment>
+      <IonAlert
+        isOpen={!!error}
+        message={error}
+        buttons={[{ text: "Okay", handler: clearError }]}
+      />
+      <IonApp>
+        <IonHeader>
+          <IonToolbar color="primary">
+            <IonTitle>Cipher Generator</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <IonGrid>
+            <IonRow>
+              <IonCol>
+                <InputControl />
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <IonItem>
+                  <IonLabel position="floating">Your Plaintext</IonLabel>
+                  <IonInput type="text" ref={plaintextInputRef}></IonInput>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <IonItem>
+                  <IonLabel position="floating">Your Key</IonLabel>
+                  <IonInput type="number" ref={keyInputRef}></IonInput>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+            <CipherControls onGenerate={generateCipher} onReset={resetInputs} />
+            {generatedCipher && <CipherResult result={generatedCipher} />}
+          </IonGrid>
+        </IonContent>
+      </IonApp>
+    </React.Fragment>
   );
 };
 
