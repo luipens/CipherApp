@@ -1,6 +1,6 @@
 import { RouteComponentProps } from "react-router";
 import CipherControls from "./CipherControls";
-import CipherResult from "./CipherResult";
+import PlaintextResult from "./CipherResult";
 import InputControl from "./InputControl";
 import React, { useRef, useState } from "react";
 import {
@@ -19,28 +19,28 @@ import {
 } from "@ionic/react";
 
 const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
-  const [generatedCipher, setGeneratedCipher] = useState<string | number>();
+  const [generatedPlaintext, setGeneratedPlaintext] = useState<string | number>();
   const [error, setError] = useState<string>();
 
-  const plaintextInputRef = useRef<HTMLIonInputElement>(null);
+  const cipherInputRef = useRef<HTMLIonInputElement>(null);
   const keyInputRef = useRef<HTMLIonInputElement>(null);
 
-  const generateCipher = () => {
-    const enteredPlaintext = plaintextInputRef.current!.value;
+  const generatePlaintext = () => {
+    const enteredCipher = cipherInputRef.current!.value;
     const enteredKey = keyInputRef.current!.value;
 
-    if (!enteredPlaintext || !enteredKey || +enteredKey <= 0) {
+    if (!enteredCipher || !enteredKey || +enteredKey <= 0) {
       setError("Please enter a valid (non-negative) key");
       return;
     }
 
-    const cipher = enteredPlaintext;
+    const plaintext = enteredCipher;
 
-    setGeneratedCipher(cipher);
+    setGeneratedPlaintext(plaintext);
   };
 
   const resetInputs = () => {
-    plaintextInputRef.current!.value = "";
+    cipherInputRef.current!.value = "";
     keyInputRef.current!.value = "";
   };
 
@@ -71,7 +71,7 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
               <IonCol>
                 <IonItem>
                   <IonLabel position="floating">Your Ciphertext</IonLabel>
-                  <IonInput type="text" ref={plaintextInputRef}></IonInput>
+                  <IonInput type="text" ref={cipherInputRef}></IonInput>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -83,8 +83,8 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
                 </IonItem>
               </IonCol>
             </IonRow>
-            <CipherControls onGenerate={generateCipher} onReset={resetInputs} />
-            {generatedCipher && <CipherResult result={generatedCipher} />}
+            <CipherControls onGenerate={generatePlaintext} onReset={resetInputs} />
+            {generatedPlaintext && <PlaintextResult result={generatedPlaintext} />}
           </IonGrid>
         </IonContent>
       </IonApp>
