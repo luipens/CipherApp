@@ -1,21 +1,19 @@
 import {
   IonApp,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonInput,
-  IonItem,
   IonLabel,
-  IonRow,
-  IonTitle,
-  IonToolbar,
-  IonAlert,
+  IonPage,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+  IonIcon,
 } from "@ionic/react";
 
-import CipherControls from "./components/CipherControls";
-import CipherResult from "./components/CipherResult";
-import InputControl from "./components/InputControl";
+import { IonReactRouter } from '@ionic/react-router';
+
+import { Redirect, Route } from 'react-router-dom';
+
+import Tab1 from './components/Encryption';
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -35,81 +33,34 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import React, { useRef, useState } from "react";
+import React from "react";
+import { eyeOff, eye } from 'ionicons/icons';
+import Tab2 from "./components/Decryption";
 
-const App: React.FC = () => {
-  const [generatedCipher, setGeneratedCipher] = useState<string | number>();
-  const [error, setError] = useState<string>();
-
-  const plaintextInputRef = useRef<HTMLIonInputElement>(null);
-  const keyInputRef = useRef<HTMLIonInputElement>(null);
-
-  const generateCipher = () => {
-    const enteredPlaintext = plaintextInputRef.current!.value;
-    const enteredKey = keyInputRef.current!.value;
-
-    if (!enteredPlaintext || !enteredKey || +enteredKey <= 0) {
-      setError("Please enter a valid (non-negative) key");
-      return;
-    }
-
-    const cipher = enteredPlaintext;
-
-    setGeneratedCipher(cipher);
-  };
-
-  const resetInputs = () => {
-    plaintextInputRef.current!.value = "";
-    keyInputRef.current!.value = "";
-  };
-
-  const clearError = () => {
-    setError('');
-  };
-
-  return (
-    <React.Fragment>
-      <IonAlert
-        isOpen={!!error}
-        message={error}
-        buttons={[{ text: "Okay", handler: clearError }]}
-      />
-      <IonApp>
-        <IonHeader>
-          <IonToolbar color="primary">
-            <IonTitle>Cipher Generator</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent className="ion-padding">
-          <IonGrid>
-            <IonRow>
-              <IonCol>
-                <InputControl />
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                <IonItem>
-                  <IonLabel position="floating">Your Plaintext</IonLabel>
-                  <IonInput type="text" ref={plaintextInputRef}></IonInput>
-                </IonItem>
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                <IonItem>
-                  <IonLabel position="floating">Your Key</IonLabel>
-                  <IonInput type="number" ref={keyInputRef}></IonInput>
-                </IonItem>
-              </IonCol>
-            </IonRow>
-            <CipherControls onGenerate={generateCipher} onReset={resetInputs} />
-            {generatedCipher && <CipherResult result={generatedCipher} />}
-          </IonGrid>
-        </IonContent>
-      </IonApp>
-    </React.Fragment>
-  );
-};
+const App: React.FC = () => (
+  <IonApp>
+    <IonReactRouter>
+      <IonPage id="main">
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route path="/:tab(tab1)" component={Tab1} exact={true} />
+            <Route path="/:tab(tab2)" component={Tab2} exact={true} />
+            <Route exact path="/" render={() => <Redirect to="/tab1" />} />
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="tab1" href="/tab1">
+              <IonIcon icon={eyeOff} />
+              <IonLabel>Encryption</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab2" href="/tab2">
+              <IonIcon icon={eye} />
+              <IonLabel>Decryption</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonPage>
+    </IonReactRouter>
+  </IonApp>
+);
 
 export default App;
