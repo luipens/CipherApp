@@ -21,6 +21,9 @@ import {
 const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
   const [generatedCipher, setGeneratedCipher] = useState<string | number>();
   const [error, setError] = useState<string>();
+  const [cipher, setCipher] = useState<"ceaserCipher" | "vernamCipher">(
+    "ceaserCipher"
+  );
 
   const plaintextInputRef = useRef<HTMLIonInputElement>(null);
   const keyInputRef = useRef<HTMLIonInputElement>(null);
@@ -47,6 +50,13 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
   const clearError = () => {
     setError("");
   };
+
+  const selectCipherHandler = (
+    selectedCipher: "ceaserCipher" | "vernamCipher"
+  ) => {
+    setCipher(selectedCipher);
+  };
+  
   return (
     <React.Fragment>
       <IonAlert
@@ -64,7 +74,10 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <InputControl />
+                <InputControl
+                  selectedCipher={cipher}
+                  onSelectCipher={selectCipherHandler}
+                />
               </IonCol>
             </IonRow>
             <IonRow>

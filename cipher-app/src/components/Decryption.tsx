@@ -19,8 +19,13 @@ import {
 } from "@ionic/react";
 
 const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
-  const [generatedPlaintext, setGeneratedPlaintext] = useState<string | number>();
+  const [generatedPlaintext, setGeneratedPlaintext] = useState<
+    string | number
+  >();
   const [error, setError] = useState<string>();
+  const [cipher, setCipher] = useState<"ceaserCipher" | "vernamCipher">(
+    "ceaserCipher"
+  );
 
   const cipherInputRef = useRef<HTMLIonInputElement>(null);
   const keyInputRef = useRef<HTMLIonInputElement>(null);
@@ -47,6 +52,13 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
   const clearError = () => {
     setError("");
   };
+
+  const selectCipherHandler = (
+    selectedCipher: "ceaserCipher" | "vernamCipher"
+  ) => {
+    setCipher(selectedCipher);
+  };
+  
   return (
     <React.Fragment>
       <IonAlert
@@ -64,7 +76,10 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <InputControl />
+                <InputControl
+                  selectedCipher={cipher}
+                  onSelectCipher={selectCipherHandler}
+                />
               </IonCol>
             </IonRow>
             <IonRow>
@@ -83,8 +98,13 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
                 </IonItem>
               </IonCol>
             </IonRow>
-            <CipherControls onGenerate={generatePlaintext} onReset={resetInputs} />
-            {generatedPlaintext && <PlaintextResult result={generatedPlaintext} />}
+            <CipherControls
+              onGenerate={generatePlaintext}
+              onReset={resetInputs}
+            />
+            {generatedPlaintext && (
+              <PlaintextResult result={generatedPlaintext} />
+            )}
           </IonGrid>
         </IonContent>
       </IonApp>
