@@ -12,7 +12,17 @@ function replace(input: string, key: number) : string {
 //test
 //us= input("Enter name: ")
 //The problem we face is, how we can promt the user to add input in typescript, and also the output
+/**
+sample code
+var stdin = process.openStdin();
 
+stdin.addListener("data", function(d) {
+    // note:  d is an object, and when converted to a string it will
+    // end with a linefeed.  so we (rather crudely) account for that  
+    // with toString() and then substring() 
+    console.log("you entered: [" + d.toString().trim() + "]");
+});
+*/
 var str = 'Hey Belay and Eva,';
 //Operations
 var encoded = replace(str, 3);
