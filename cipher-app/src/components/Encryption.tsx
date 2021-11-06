@@ -2,6 +2,7 @@ import { RouteComponentProps } from "react-router";
 import CipherControls from "./CipherControls";
 import CipherResult from "./CipherResult";
 import InputControl from "./InputControl";
+import vernamCipher from "./vernamCipher";
 import React, { useRef, useState } from "react";
 import {
   IonContent,
@@ -27,10 +28,12 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
 
   const plaintextInputRef = useRef<HTMLIonInputElement>(null);
   const keyInputRef = useRef<HTMLIonInputElement>(null);
+  //const algorithmInputRef = useRef<HTMLION>
 
   const generateCipher = () => {
     const enteredPlaintext = plaintextInputRef.current!.value;
     const enteredKey = keyInputRef.current!.value;
+    const algorithm = InputControl.defaultProps;
 
     if (!enteredPlaintext || !enteredKey || +enteredKey <= 0) {
       setError("Please enter a valid (non-negative) key");
@@ -38,8 +41,17 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
     }
 
     const cipher = enteredPlaintext;
+    var output = "something";
 
-    setGeneratedCipher(cipher);
+    if(algorithm == "ceasarCipher"){
+        //do something
+    }
+
+    else if(algorithm == "vernamCipher"){
+        output = vernamCipher(enteredPlaintext, enteredKey);
+    }
+
+    setGeneratedCipher(output);
   };
 
   const resetInputs = () => {
