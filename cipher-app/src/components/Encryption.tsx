@@ -3,6 +3,7 @@ import CipherControls from "./CipherControls";
 import CipherResult from "./CipherResult";
 import InputControl from "./InputControl";
 import vernamCipher from "./vernamCipher";
+import caesarCipher from "./caesarCipher";
 import React, { useRef, useState } from "react";
 import {
   IonContent,
@@ -22,34 +23,33 @@ import {
 const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
   const [generatedCipher, setGeneratedCipher] = useState<string | number>();
   const [error, setError] = useState<string>();
-  const [cipher, setCipher] = useState<"ceaserCipher" | "vernamCipher">(
-    "ceaserCipher"
+  const [cipher, setCipher] = useState<"caesarCipher" | "vernamCipher">(
+    "caesarCipher"
   );
 
   const plaintextInputRef = useRef<HTMLIonInputElement>(null);
   const keyInputRef = useRef<HTMLIonInputElement>(null);
-  //const algorithmInputRef = useRef<HTMLION>
 
   const generateCipher = () => {
     const enteredPlaintext = plaintextInputRef.current!.value;
     const enteredKey = keyInputRef.current!.value;
-    const algorithm = InputControl.defaultProps;
 
     if (!enteredPlaintext || !enteredKey || +enteredKey <= 0) {
       setError("Please enter a valid (non-negative) key");
       return;
     }
 
-    const cipher = enteredPlaintext;
-    var output = "something";
-    let modeSel = 1; //true == encrypt
+    let output = "something";
+    let modelSel = 1; //true == encrypt
 
-    if(algorithm == "ceasarCipher"){
+    if(cipher == "caesarCipher"){
         //do something
+        //output = caesarCipher(enteredPlaintext, enteredKey);
+        //output = "In caesarCipher file";
     }
 
-    else if(algorithm == "vernamCipher"){
-        output = vernamCipher(enteredPlaintext, enteredKey, modeSel);
+    else if(cipher == "vernamCipher"){
+        output = vernamCipher(enteredPlaintext, enteredKey, modelSel);
     }
 
     setGeneratedCipher(output);
@@ -65,7 +65,7 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
   };
 
   const selectCipherHandler = (
-    selectedCipher: "ceaserCipher" | "vernamCipher"
+    selectedCipher: "caesarCipher" | "vernamCipher"
   ) => {
     setCipher(selectedCipher);
   };
