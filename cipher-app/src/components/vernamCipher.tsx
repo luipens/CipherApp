@@ -17,7 +17,7 @@ const cipherMap = () => {
     let chars: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   
     chars.split("").forEach((element, index) => { keymap[element] = index; });
-    return keymap
+    return keymap;
 };//chipherMap
   
 //loop up function, take the number and return the letter.
