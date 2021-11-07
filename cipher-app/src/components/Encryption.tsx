@@ -42,13 +42,14 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
 
     const cipher = enteredPlaintext;
     var output = "something";
+    let modeSel = 1; //true == encrypt
 
     if(algorithm == "ceasarCipher"){
         //do something
     }
 
     else if(algorithm == "vernamCipher"){
-        output = vernamCipher(enteredPlaintext, enteredKey);
+        output = vernamCipher(enteredPlaintext, enteredKey, modeSel);
     }
 
     setGeneratedCipher(output);
