@@ -2,6 +2,7 @@ import { RouteComponentProps } from "react-router";
 import CipherControls from "./CipherControls";
 import PlaintextResult from "./CipherResult";
 import InputControl from "./InputControl";
+import vernamCipher from "./vernamCipher";
 import React, { useRef, useState } from "react";
 import {
   IonContent,
@@ -19,12 +20,10 @@ import {
 } from "@ionic/react";
 
 const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
-  const [generatedPlaintext, setGeneratedPlaintext] = useState<
-    string | number
-  >();
+  const [generatedPlaintext, setGeneratedPlaintext] = useState<string>();
   const [error, setError] = useState<string>();
-  const [cipher, setCipher] = useState<"ceaserCipher" | "vernamCipher">(
-    "ceaserCipher"
+  const [cipher, setCipher] = useState<"caesarCipher" | "vernamCipher">(
+    "caesarCipher"
   );
 
   const cipherInputRef = useRef<HTMLIonInputElement>(null);
@@ -39,9 +38,22 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
       return;
     }
 
-    const plaintext = enteredCipher;
+    let output = "something";
+    let modelSel = 0; //false == decrypt
+    let text = enteredCipher.toString();
+    let key = enteredKey.toString();
 
-    setGeneratedPlaintext(plaintext);
+    if(cipher == "caesarCipher"){
+        //do something
+        //output = caesarCipher(enteredCipher, enteredKey);
+        output = "In caesarCipher file";
+    }
+
+    else if(cipher == "vernamCipher"){
+        output = vernamCipher(text, key, modelSel);
+    }
+
+    setGeneratedPlaintext(output);
   };
 
   const resetInputs = () => {
@@ -54,7 +66,7 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
   };
 
   const selectCipherHandler = (
-    selectedCipher: "ceaserCipher" | "vernamCipher"
+    selectedCipher: "caesarCipher" | "vernamCipher"
   ) => {
     setCipher(selectedCipher);
   };

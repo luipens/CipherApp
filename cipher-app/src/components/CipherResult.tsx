@@ -2,7 +2,7 @@ import React from "react";
 
 import { IonRow, IonCol, IonCard, IonCardContent } from "@ionic/react";
 
-const CipherResult: React.FC<{ result: number | string }> = (props) => {
+const CipherResult: React.FC<{ result:string }> = (props) => {
   return (
     <IonRow>
       <IonCol>

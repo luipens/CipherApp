@@ -2,12 +2,12 @@ import React, { useRef, useState } from "react";
 
 //Testing
 /*
-const vernamCipher = (plaintext: string | number, key: string | number) => {
+const vernamCipher = (plaintext: string, key: string, mode: number) => {
     let blank = "In vernam cipher file";
     let cipher = plaintext;
     let keyChange = key;
 
-    return blank;
+    return keyChange;
 }
 */
 

@@ -2,6 +2,8 @@ import { RouteComponentProps } from "react-router";
 import CipherControls from "./CipherControls";
 import CipherResult from "./CipherResult";
 import InputControl from "./InputControl";
+import vernamCipher from "./vernamCipher";
+import caesarCipher from "./caesarCipher";
 import React, { useRef, useState } from "react";
 import {
   IonContent,
@@ -19,10 +21,10 @@ import {
 } from "@ionic/react";
 
 const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
-  const [generatedCipher, setGeneratedCipher] = useState<string | number>();
+  const [generatedCipher, setGeneratedCipher] = useState<string>();
   const [error, setError] = useState<string>();
-  const [cipher, setCipher] = useState<"ceaserCipher" | "vernamCipher">(
-    "ceaserCipher"
+  const [cipher, setCipher] = useState<"caesarCipher" | "vernamCipher">(
+    "caesarCipher"
   );
 
   const plaintextInputRef = useRef<HTMLIonInputElement>(null);
@@ -37,9 +39,23 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
       return;
     }
 
-    const cipher = enteredPlaintext;
+    let output = "something";
+    let modelSel = 1; //true == encrypt
+    let text = enteredPlaintext.toString();
+    let key = enteredKey.toString;
 
-    setGeneratedCipher(cipher);
+    if(cipher == "caesarCipher"){
+        //do something
+        //output = caesarCipher(text, enteredKey);
+        output = "In caesarCipher file";
+    }
+
+    else if(cipher == "vernamCipher"){
+        //output = vernamCipher(text, key, modelSel);
+        output = "In vernamCipher file";
+    }
+
+    setGeneratedCipher(output);
   };
 
   const resetInputs = () => {
@@ -52,7 +68,7 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
   };
 
   const selectCipherHandler = (
-    selectedCipher: "ceaserCipher" | "vernamCipher"
+    selectedCipher: "caesarCipher" | "vernamCipher"
   ) => {
     setCipher(selectedCipher);
   };
@@ -92,7 +108,7 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
               <IonCol>
                 <IonItem>
                   <IonLabel position="floating">Your Key</IonLabel>
-                  <IonInput type="number" ref={keyInputRef}></IonInput>
+                  <IonInput type="text" ref={keyInputRef}></IonInput>
                 </IonItem>
               </IonCol>
             </IonRow>
