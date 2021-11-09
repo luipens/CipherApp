@@ -1,15 +1,6 @@
-import React, { useRef, useState } from "react";
-
-//Testing
-/*
-const vernamCipher = (plaintext: string, key: string, mode: number) => {
-    let blank = "In vernam cipher file";
-    let cipher = plaintext;
-    let keyChange = key;
-
-    return keyChange;
-}
-*/
+// Hyeonjeong and Cristian
+// vernamCipher is an algorithm for performing encryption or decryption using Vernam Cipher
+// This code able able to perform the encryption and decryption for the given String and Key value
 
 //cipher map reference, letters are the key, number is the value
 const cipherMap = () => {
@@ -18,7 +9,7 @@ const cipherMap = () => {
   
     chars.split("").forEach((element, index) => { keymap[element] = index; });
     return keymap;
-};//chipherMap
+};//cipherMap
   
 //loop up function, take the number and return the letter.
 const lookup = (object: {[key:string] : any}, value: any) => {

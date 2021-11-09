@@ -41,18 +41,24 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
 
     let output = "something";
     let modelSel = 1; //true == encrypt
-    let text = enteredPlaintext.toString();
-    let key = enteredKey.toString;
 
-    if(cipher == "caesarCipher"){
-        //do something
-        //output = caesarCipher(text, enteredKey);
-        output = "In caesarCipher file";
+    if(cipher === "caesarCipher"){
+
+      let key = Number(enteredKey);
+
+      if((typeof enteredPlaintext === "string") && (!isNaN(key))) {
+        output = caesarCipher(enteredPlaintext, key);
+      }
     }
 
-    else if(cipher == "vernamCipher"){
-        //output = vernamCipher(text, key, modelSel);
-        output = "In vernamCipher file";
+    else if(cipher === "vernamCipher"){
+
+      //let key = String(enteredKey);
+
+      if((typeof enteredPlaintext === "string") && (typeof enteredKey !== "number")) {
+        //output = vernamCipher(enteredPlaintext, key, modelSel);
+        //output = "in vernan cipher";
+      }
     }
 
     setGeneratedCipher(output);

@@ -3,6 +3,7 @@ import CipherControls from "./CipherControls";
 import PlaintextResult from "./CipherResult";
 import InputControl from "./InputControl";
 import vernamCipher from "./vernamCipher";
+import caesarCipher from "./caesarCipher";
 import React, { useRef, useState } from "react";
 import {
   IonContent,
@@ -40,18 +41,22 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
 
     let output = "something";
     let modelSel = 0; //false == decrypt
-    let text = enteredCipher.toString();
-    let key = enteredKey.toString();
 
-    if(cipher == "caesarCipher"){
-        //do something
-        //output = caesarCipher(enteredCipher, enteredKey);
-        output = "In caesarCipher file";
+    if(cipher === "caesarCipher"){
+
+      let key = Number(enteredKey);
+
+      if((typeof enteredCipher === "string") && (!isNaN(key))) {
+        output = caesarCipher(enteredCipher, (key * -1));
+      }
     }
 
-    else if(cipher == "vernamCipher"){
-        output = vernamCipher(text, key, modelSel);
+    else if(cipher === "vernamCipher"){
+
+      if((typeof enteredCipher === "string") && (typeof enteredKey === "string"))
+        output = vernamCipher(enteredCipher, enteredKey, modelSel);
     }
+
 
     setGeneratedPlaintext(output);
   };
@@ -106,7 +111,7 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
               <IonCol>
                 <IonItem>
                   <IonLabel position="floating">Your Key</IonLabel>
-                  <IonInput type="number" ref={keyInputRef}></IonInput>
+                  <IonInput type="text" ref={keyInputRef}></IonInput>
                 </IonItem>
               </IonCol>
             </IonRow>
