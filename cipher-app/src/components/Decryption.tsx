@@ -61,7 +61,7 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
 
     if(cipherCheck === "vernamCipher"){
       
-      let regex = /^[A-Za-z]+$/
+      let regex = /^[A-Za-z?,'!.]+$/
       let text = String(enteredCipher);
       let val = String(enteredKey);
       //check for non-alphabetic characters
