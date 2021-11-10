@@ -9,9 +9,10 @@ const caesarCipher = (plaintext: string, keyNum: number) => {
     // from the plaintext and the key number (keyNum) by the method of the Caesar Cipher.
     return plaintext.replace(/([a-z])/g, 
 
-        /*  The first match will encrypted with the shifted alphabet,
-            and this is also considered the ASCII code.
+        /*  The first match will encrypted with the shifted alphabet, and this is also considered the ASCII code.
+        
             String.fromCharCode(index) converts Unicode values from the input (index) to characters and returns it.
+            
             e(x)=(x+k) (mod)26 Where k is the key (the shift) applied to each letter. After applying this function, 
             the result is a number which must then be translated back into a letter. The decryption function is : e(x)=(x-k) (mod)26.
         */
