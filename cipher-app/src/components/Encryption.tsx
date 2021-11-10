@@ -34,9 +34,47 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
     const enteredPlaintext = plaintextInputRef.current!.value;
     const enteredKey = keyInputRef.current!.value;
 
-    if (!enteredPlaintext || !enteredKey || +enteredKey <= 0) {
-      setError("Please enter a valid (non-negative) key");
+    //initial check for empty iuputs
+    if (!enteredPlaintext || !enteredKey) {
+      setError("Please enter a valid Plaintext and/or Key");
       return;
+    }
+
+    let cipherCheck = cipher;
+
+    //check for specifics based on cipher
+    if(cipherCheck === "caesarCipher"){
+      
+      let val = Number(enteredKey);
+      //check if Key is numerical
+      if(isNaN(val)){
+        setError("Please enter a valid numeric Key");
+        return;
+      }
+
+      //check for a negative key
+      if(val <= 0){
+        setError("Please enter a positive numeric Key greater than 0");
+        return;
+      }
+    }
+
+    if(cipherCheck === "vernamCipher"){
+      
+      let regex = /^[A-Za-z]+$/
+      let text = String(enteredPlaintext);
+      let val = String(enteredKey);
+      //check for non-alphabetic characters
+      if((!regex.test(text)) || (!regex.test(val))){
+        setError("Please enter a valid Plaintext and/or Key consisting of only alphabetic characters");
+        return;
+      }
+
+      //check for same length as plaintext
+      if(val.length != text.length){
+        setError("Please enter a Plaintext and Key of the same length");
+        return;
+      }
     }
 
     let output = "something";
@@ -53,10 +91,10 @@ const Tab1: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
 
     else if(cipher === "vernamCipher"){
 
-      //let key = String(enteredKey);
+      let key = String(enteredKey);
 
-      if((typeof enteredPlaintext === "string") && (typeof enteredKey !== "number")) {
-        //output = vernamCipher(enteredPlaintext, key, modelSel);
+      if((typeof enteredPlaintext === "string") && (typeof key !== "number")) {
+        output = vernamCipher(enteredPlaintext, key, modelSel);
         //output = "in vernan cipher";
       }
     }

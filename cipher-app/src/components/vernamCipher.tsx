@@ -38,14 +38,14 @@ const vernamCipher = (plaintext: string, userKey: string, modeSel: number) => {
     let result: string = "";
     let cipherKeys: number[];
   
-    if(userKey.length === 0 || userKey === ""){
-        cipherKeys = Array.from({ length: plaintext.length }, () => Math.floor(Math.random() * 2000));
-    }//if
-    else{
+    // if(userKey.length === 0 || userKey === ""){
+    //     cipherKeys = Array.from({ length: plaintext.length }, () => Math.floor(Math.random() * 2000));
+    // }//if
+    //else{
         cipherKeys = userKey.split(" ").map((item) => {
             return parseInt(item, 10);
         });
-    }//else
+    //}//else
   
     //set of characters that make up the plaintext
     let userText = plaintext.toUpperCase().split("");
