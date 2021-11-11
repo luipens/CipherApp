@@ -1,3 +1,8 @@
+// Luis
+// This component is the focal point for Encryption. It handles I/O and error checking for Encryption tab.
+// It has a generateCiphertext hook that links either to vernamCipher.tsx or caeserCipher.tsx components depending 
+// on the cipher selection in the ion segment.
+
 import { RouteComponentProps } from "react-router";
 import CipherControls from "./CipherControls";
 import CipherResult from "./CipherResult";

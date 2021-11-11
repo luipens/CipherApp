@@ -1,6 +1,11 @@
+// Luis
+// This component is the focal point for decryption. It handles I/O and error checking for decryption tab.
+// It has a generatePlaintext hook that links either to vernamCipher.tsx or caeserCipher.tsx components depending 
+// on the cipher selection in the ion segment.
+
 import { RouteComponentProps } from "react-router";
 import CipherControls from "./CipherControls";
-import PlaintextResult from "./CipherResult";
+import PlaintextResult from "./PlaintextResult";
 import InputControl from "./InputControl";
 import vernamCipher from "./vernamCipher";
 import caesarCipher from "./caesarCipher";

@@ -1,3 +1,6 @@
+// Luis
+// This component creates a segment to switch between ciphers
+
 import { IonLabel, IonSegment, IonSegmentButton } from "@ionic/react";
 import { attachProps } from "@ionic/react/dist/types/components/utils";
 import React from "react";

@@ -1,3 +1,6 @@
+// Luis
+// This component holds the functionality for Generate and Reset buttons
+
 import React from "react";
 import { IonRow, IonCol, IonButton, IonIcon } from "@ionic/react";
 import { keyOutline, refreshOutline } from "ionicons/icons";

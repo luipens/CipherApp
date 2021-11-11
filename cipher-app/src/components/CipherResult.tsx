@@ -1,3 +1,6 @@
+// Luis
+// This component displays encryption result as an ion card 
+
 import React from "react";
 
 import { IonRow, IonCol, IonCard, IonCardContent } from "@ionic/react";

@@ -1,3 +1,6 @@
+// Luis
+// This component creates a react router, so that there is multiple tabs
+
 import {
   IonApp,
   IonLabel,
