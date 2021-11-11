@@ -61,17 +61,28 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
 
     if(cipherCheck === "vernamCipher"){
       
-      let regex = /^[A-Za-z?,'!.]+$/
+      let regex = /^[A-Za-z?,'!." -]+$/
+      //let regex = /^[a-z0-9-\'_\.,:\(\)&\[\]\/+=\?#@ \xC0-\xFF]+$/i;
       let text = String(enteredCipher);
       let val = String(enteredKey);
-      //check for non-alphabetic characters
-      if((!regex.test(text)) || (!regex.test(val))){
+      
+      //to shorten string and get actual length with just letters
+      let text2 = text;
+      text2 = text2.replaceAll(" ", "");
+      text2 = text2.replaceAll("?", "");
+      text2 = text2.replaceAll(",", "");
+      text2 = text2.replaceAll("'", "");
+      text2 = text2.replaceAll("!", "");
+      text2 = text2.replaceAll(".", "");
+
+      //check for non-alphabetic characters in actual message without spaces and punctuation
+      if((!regex.test(text2)) || (!regex.test(val))){
         setError("Please enter a valid Plaintext and/or Key consisting of only alphabetic characters");
         return;
       }
-
+      
       //check for same length as plaintext
-      if(val.length != text.length){
+      if(val.length != text2.length){
         setError("Please enter a Plaintext and Key of the same length");
         return;
       }

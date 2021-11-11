@@ -14,7 +14,6 @@ const cipherMap = () => {
 //loop up function, take the number and return the letter.
 const lookup = (object: {[key:string] : any}, value: any) => {
     return Object.keys(object).find(key => object[key] === value); 
-    //return ()
 };//lookup
   
 /*
@@ -38,46 +37,48 @@ const vernamCipher = (plaintext: string, userKey: string, modeSel: number) => {
     const refMap = cipherMap();
     let result: string = "";
     let cipherKeys: number[];
-  
-    // if(userKey.length === 0 || userKey === ""){
-    //     cipherKeys = Array.from({ length: plaintext.length }, () => Math.floor(Math.random() * 2000));
-    // }//if
-    //else{
-        cipherKeys = userKey.split("").map((item) => {
-            let num:number = item.charCodeAt(0);
-            //console.log("in cipherKeys, num value = " + num);
-            return num;
-        });
-    //}//else
+
+    cipherKeys = userKey.split("").map((item) => {
+        let num:number = item.charCodeAt(0);
+
+        return num;
+    });
   
     //set of characters that make up the plaintext
     let userText = plaintext.toUpperCase().split("");
-  
+        
     //If modeSel = true (1), encrypt.  False (0) = decrypt
     if(modeSel == 1){
-        //encryption loop
-        console.log(cipherKeys);
-        console.log(refMap);
+        let spaceVal = 0;
         userText.forEach((item: string, index: number) =>{
-            const val = lookup(refMap, ((refMap[item] + 65) + cipherKeys[index]) % 26);
-            // console.log("refMap[" + item + "] = " + refMap[item]);
-            // console.log("cipherKeys[" + index + "] = " + cipherKeys[index]);
-            // console.log("value for " + index + " iteration: " + val);
-            result += item !== userText[index] ? val?.toLowerCase() : val;
 
+            const val = lookup(refMap, ((refMap[item] + 65) + cipherKeys[index - spaceVal]) % 26);
+            
+            if (!item.match(/^[A-Z]+$/)){
+                result += item;
+                spaceVal++;
+            }//if not alphanumeric
+            else{result += item !== userText[index] ? val?.toLowerCase() : val;
+            }
         });
     }//if
     else if(modeSel == 0){
         //decryption loop
+        let spaceVal = 0;
         userText.forEach((item: string, index: number) =>{
-            let temp = ((refMap[item] + 65) - cipherKeys[index]) % 26;
+            let temp = ((refMap[item] + 65) - cipherKeys[index - spaceVal]) % 26;
                 if(temp < 0){
                     temp = temp + 26;
                 }//if
 
             const target = temp;
             const val = lookup(refMap, target);
-            result += item !== userText[index] ? val?.toLowerCase() : val;
+            if (!item.match(/^[A-Z]+$/)){
+                result += item;
+                spaceVal++;
+            }//if not alphanumeric
+            else {result += item !== userText[index] ? val?.toLowerCase() : val;
+            }
         });
     }//else if
     else{
