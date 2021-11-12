@@ -10,6 +10,7 @@ import InputControl from "./InputControl";
 import vernamCipher from "./vernamCipher";
 import caesarCipher from "./caesarCipher";
 import React, { useRef, useState } from "react";
+import { Clipboard } from "@capacitor/clipboard";
 import {
   IonContent,
   IonHeader,
@@ -126,6 +127,29 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
     setError("");
   };
 
+  const onCopyToClipBoard = async() =>{
+    if((generatedPlaintext == "") || (generatedPlaintext == null)){
+      await Clipboard.write({
+        string: ""
+      });
+    }
+    else{
+    await Clipboard.write({
+      string: generatedPlaintext
+    });
+    }
+  };
+
+  const onPasteFromClipboard = async() =>{
+    const {type, value} = await Clipboard.read();
+    if(value === null)
+      cipherInputRef.current!.value = "";
+    else
+      cipherInputRef.current!.value = value;
+  };
+
+
+
   const selectCipherHandler = (
     selectedCipher: "caesarCipher" | "vernamCipher"
   ) => {
@@ -174,6 +198,8 @@ const Tab2: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
             <CipherControls
               onGenerate={generatePlaintext}
               onReset={resetInputs}
+              onCopyToClipBoard={onCopyToClipBoard }
+               onPasteFromClipBoard = {onPasteFromClipboard}
             />
             {generatedPlaintext && (
               <PlaintextResult result={generatedPlaintext} />
